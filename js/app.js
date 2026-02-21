@@ -387,9 +387,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (selectedItem) {
             lastMixerItems[engineIndex] = selectedItem;
-            const slotEl = document.getElementById(`slot - ${domIndex} `);
-            slotEl.innerHTML = createSlotHTML(selectedItem, engineIndex, domIndex);
+            const slotEl = document.getElementById(`slot-${domIndex}`);
+            if (slotEl) slotEl.innerHTML = createSlotHTML(selectedItem, engineIndex, domIndex);
             closeMixerModal();
+        }
+    };
+
+    window.togglePin = (domIndex, engineIndex) => {
+        if (currentPinned[domIndex]) {
+            currentPinned[domIndex] = null;
+        } else {
+            currentPinned[domIndex] = lastMixerItems[engineIndex];
+        }
+
+        const slotEl = document.getElementById(`slot-${domIndex}`);
+        if (slotEl && lastMixerItems[engineIndex]) {
+            slotEl.innerHTML = createSlotHTML(lastMixerItems[engineIndex], engineIndex, domIndex);
         }
     };
 
@@ -422,12 +435,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const meal = engine.generateMeal({ healthMin, pinned: tempPinned, type: 'split', tags: window.tagState });
         if (meal && meal.type === 'split') {
             lastMixerItems[engineIndex] = meal.items[engineIndex];
-            const slotEl = document.getElementById(`slot - ${domIndex} `);
+            const slotEl = document.getElementById(`slot-${domIndex}`);
             // Unpin if it was pinned
             if (currentPinned[domIndex]) window.togglePin(domIndex, engineIndex);
 
             // Render new
-            slotEl.innerHTML = createSlotHTML(meal.items[engineIndex], engineIndex, domIndex);
+            if (slotEl) slotEl.innerHTML = createSlotHTML(meal.items[engineIndex], engineIndex, domIndex);
             showBommaTip([meal.items[engineIndex]]);
         }
     };
@@ -472,18 +485,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return `
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col gap-3 animate-pop opacity-0 ${animationDelay} transition-all hover:shadow-md hover:border-orange-200 cursor-pointer" onclick="const details = this.querySelector('.combo-details'); details.classList.toggle('hidden');">
-                <div class="flex items-center gap-4">
-                    <div class="text-xl bg-orange-50 px-2 flex items-center justify-center h-16 rounded-xl shrink-0 border border-orange-100 gap-1">
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <div class="text-sm sm:text-xl bg-orange-50 px-2 flex items-center justify-center h-14 sm:h-16 rounded-xl shrink-0 border border-orange-100 gap-1">
                         <span class="tracking-widest">${comboIcons}</span>
                     </div>
-                    <div class="flex-grow">
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Mix & Match</p>
-                        <h3 class="text-lg font-bold text-gray-800">Zelf samengesteld</h3>
-                        <p class="text-[10px] text-orange-400 italic">Klik om ingrediënten te zien ⬇️</p>
+                    <div class="flex-grow min-w-0">
+                        <p class="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 truncate">Mix & Match</p>
+                        <h3 class="text-base sm:text-lg font-bold text-gray-800 leading-tight break-words">Zelf samengesteld</h3>
+                        <p class="text-[9px] sm:text-[10px] text-orange-400 italic">Klik voor details ⬇️</p>
                     </div>
-                    <div class="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-full border-2 ${scoreColor}">
-                        <span class="text-xs font-bold">Gez.</span>
-                        <span class="font-black leading-none">${avgHealth}</span>
+                    <div class="shrink-0 flex flex-col items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 ${scoreColor}">
+                        <span class="text-[10px] sm:text-xs font-bold">Gez.</span>
+                        <span class="font-black leading-none text-sm sm:text-base">${avgHealth}</span>
                     </div>
                 </div>
 
