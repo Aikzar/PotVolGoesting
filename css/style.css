@@ -1,0 +1,225 @@
+/* Bomma Chic Theme & Custom Utilities */
+:root {
+    --bomma-red: #d32f2f;
+    --bomma-cream: #fdfbf7;
+    --bomma-dark: #3e2723;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bomma-cream);
+    color: var(--bomma-dark);
+    /* Subtle kitchen towel pattern */
+    background-image:
+        linear-gradient(rgba(211, 47, 47, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(211, 47, 47, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.font-bomma {
+    font-family: 'Pacifico', cursive;
+}
+
+.btn-bomma {
+    background-color: var(--bomma-red);
+    color: white;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(211, 47, 47, 0.2);
+}
+
+.btn-bomma:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(211, 47, 47, 0.3);
+}
+
+.btn-bomma:active {
+    transform: translateY(0);
+}
+
+.btn-chaos {
+    background-color: #ffb300;
+    color: #3e2723;
+    box-shadow: 0 4px 6px rgba(255, 179, 0, 0.2);
+}
+
+.btn-chaos:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 179, 0, 0.3);
+}
+
+/* Slider styling */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: var(--slider-thumb-color, var(--bomma-red));
+    cursor: pointer;
+    margin-top: -8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+/* Animations */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* New Pot Animations */
+@keyframes shakePot {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0);
+    }
+
+    15% {
+        transform: translateX(-4px) rotate(-3deg);
+    }
+
+    30% {
+        transform: translateX(4px) rotate(3deg);
+    }
+
+    45% {
+        transform: translateX(-4px) rotate(-2deg);
+    }
+
+    60% {
+        transform: translateX(4px) rotate(2deg);
+    }
+
+    75% {
+        transform: translateX(-2px) rotate(-1deg);
+    }
+}
+
+@keyframes flyOff {
+    0% {
+        transform: translateY(0) rotate(0) scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(-40px) rotate(-10deg) scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-300px) rotate(60deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+.animate-pop {
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-shake {
+    animation: shakePot 0.4s ease-in-out infinite;
+}
+
+.animate-fly-off {
+    animation: flyOff 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transform-origin: center right;
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.2s;
+}
+
+.delay-3 {
+    animation-delay: 0.3s;
+}
+
+.slot-card {
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.slot-card.pinned {
+    border-color: #ffb300;
+    background-color: #fffde7;
+    box-shadow: 0 0 15px rgba(255, 179, 0, 0.2);
+}
+
+.slot-icon {
+    width: 48px;
+    height: 48px;
+    background: #fff3e0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.slot-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background: #f5f5f5;
+}
+
+.control-btn:hover {
+    background: #eeeeee;
+}
+
+.control-btn.active {
+    background: #ffb300;
+    color: white;
+}
+
+.bomma-tip-bubble {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    border: 2px dashed #ffcc80;
+}
+
+.bomma-tip-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 20px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}

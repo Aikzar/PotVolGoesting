@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PotVolGoesting Data Link Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .status { padding: 10px; border-radius: 5px; margin-bottom: 20px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Data Link Verification</h1>
+    <div id="status" class="status">Loading data...</div>
+    <div id="output"></div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const outputDiv = document.getElementById('output');
+
+        async function verifyLink() {
+            try {
+                const response = await fetch('data/recipes.json');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const data = await response.json();
+                
+                // Validate Schema (Basic)
+                const isValid = Array.isArray(data) && data.length > 0 && 
+                                data[0].hasOwnProperty('id') && 
+                                data[0].hasOwnProperty('type');
+
+                if (isValid) {
+                    statusDiv.textContent = `✅ SUCCESS: Loaded ${data.length} recipes. Schema looks correct.`;
+                    statusDiv.classList.add('success');
+                    
+                    // Show some counts
+                    const proteins = data.filter(i => i.type === 'protein').length;
+                    const veggies = data.filter(i => i.type === 'vegetable').length;
+                    const carbs = data.filter(i => i.type === 'carbohydrate').length;
+                    
+                    outputDiv.innerHTML = `
+                        <p><strong>Breakdown:</strong></p>
+                        <ul>
+                            <li>Proteins: ${proteins}</li>
+                            <li>Vegetables: ${veggies}</li>
+                            <li>Carbs: ${carbs}</li>
+                        </ul>
+                        <pre>${JSON.stringify(data[0], null, 2)}</pre>
+                    `;
+                } else {
+                    throw new Error("Invalid User Schema: missing 'id' or 'type'");
+                }
+
+            } catch (error) {
+                statusDiv.textContent = `❌ FAILED: ${error.message}`;
+                statusDiv.classList.add('error');
+            }
+        }
+
+        verifyLink();
+    </script>
+</body>
+</html>

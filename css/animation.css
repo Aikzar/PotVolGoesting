@@ -1,0 +1,180 @@
+/* Pot Animation Styles */
+.pot-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    z-index: 1000;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s;
+}
+
+.pot-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#pot-body {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+#pot-lid {
+    position: absolute;
+    width: 100%;
+    z-index: 11;
+    top: -10px;
+    /* Adjust based on image */
+    transition: transform 0.2s;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Animations */
+.shaking #pot-body,
+.shaking #pot-lid {
+    animation: pot-shake 0.1s infinite;
+}
+
+@keyframes pot-shake {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(-2px, 2px) rotate(-1deg);
+    }
+
+    50% {
+        transform: translate(2px, -2px) rotate(1deg);
+    }
+
+    75% {
+        transform: translate(-2px, -2px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translate(2px, 2px) rotate(1deg);
+    }
+}
+
+.exploding #pot-lid {
+    animation: lid-pop 1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes lid-pop {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    40% {
+        transform: translateY(-150px) rotate(-20deg) scale(1.1);
+    }
+
+    100% {
+        transform: translateY(-400px) rotate(-45deg) opacity: 0;
+    }
+}
+
+/* Steam Particles */
+.steam-container {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    z-index: 9;
+    pointer-events: none;
+}
+
+.steam-particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+}
+
+.exploding .steam-particle {
+    animation: steam-explosion 1.5s forwards ease-out;
+}
+
+/* Stagger different particles */
+.exploding .steam-particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0.1s;
+    width: 60px;
+    height: 60px;
+}
+
+.exploding .steam-particle:nth-child(2) {
+    left: 50%;
+    animation-delay: 0.0s;
+    width: 80px;
+    height: 80px;
+}
+
+.exploding .steam-particle:nth-child(3) {
+    left: 80%;
+    animation-delay: 0.2s;
+    width: 50px;
+    height: 50px;
+}
+
+.exploding .steam-particle:nth-child(4) {
+    left: 30%;
+    animation-delay: 0.15s;
+}
+
+.exploding .steam-particle:nth-child(5) {
+    left: 60%;
+    animation-delay: 0.25s;
+}
+
+@keyframes steam-explosion {
+    0% {
+        opacity: 0.6;
+        transform: translateY(0) scale(0.5);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: translateY(-100px) scale(2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(3);
+    }
+}
+
+/* Results Transitions */
+.results-fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease-out;
+}
+
+.fly-out-reveal {
+    animation: fly-out 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fly-out {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.2);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
