@@ -27,4 +27,4 @@ PotVolGoesting is een speelse, interactieve en volledig aanpasbare maaltijd-rand
 * **Data Source:** Werkt rechtstreeks vanuit een `recepten.json` bestand.
 
 ## 🚀 Hosting
-**Host:** Bezoek de volgende, door Github gehoste, website om het te gebruiken: 
+**Host:** Bezoek de volgende, door Github gehoste, website om het te gebruiken: https://aikzar.github.io/PotVolGoesting/
